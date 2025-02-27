@@ -1,21 +1,21 @@
-const express = require('express')
-const cors=require('cors')
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./db/db"); // Ensure correct function name
 
-const app=express()
-require('dotenv').config() 
+const app = express();
+require("dotenv").config();
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000; // Default to 5000 if PORT is undefined
 
-//middlewares
-app.use(express.json()) 
-app.use(cors())
+// Middlewares
+app.use(express.json());
+app.use(cors());
 
-app.get('/',(req,res)=>{
-    res.send('Hello World')
-})
-const server=()=>{
-    app.listen(PORT, ()=> {
-        console.log('listening to port:', PORT)
-    })
-}
-server()
+const server = async () => {
+  await connectDB(); // Call the async function properly
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port: ${PORT}`);
+  });
+};
+
+server();
